@@ -1,0 +1,40 @@
+<html>
+<head>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/p5@1.1.9/lib/p5.js"></script> -->
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet"> -->
+    
+    <style>
+        /* Ausgewählte Textbox nicht highlighten */
+        :focus {
+  outline: none;
+        }
+
+        body {
+          overflow: hidden; /* Hide scrollbars */
+        }
+        @font-face {
+        font-family: 'Inter';
+        src: url("fonts/Inter.ttf");
+        font-weight: 100 1000;
+	      font-stretch: 25% 151%;
+        }
+
+        h1 {
+        font-family: 'Inter';
+        font-size:10px;
+        margin: 0;
+        padding: 0;
+        text-align:left;
+        position: absolute;
+        top:50%;
+        left:50%;
+        transform: translateX(-50%) translateY(-50%);
+        }
+        
+    </style>
+</head>
+<body> 
+ <h1 id="centerText" contenteditable="true">Interaktion bezeichnet das wechselseitige aufeinander Einwirken von Akteuren oder Systemen und ist eng verknüpft mit den übergeordneten Begriffen Kommunikation, Handeln und Arbeit.<h1>
+</body>
+<script src="gyro_sensor.js"></script>
+</html>
