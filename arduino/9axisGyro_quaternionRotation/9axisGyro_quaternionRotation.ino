@@ -68,6 +68,20 @@
 #include <SPI.h>
 #include <Wire.h>
 
+// Helligekeitssensor  -----------------------------------
+
+#define lightPin A0
+int lightWert;
+
+// Ultraschall  -----------------------------------
+int trigger = 7;
+int echo = 6;
+long dauer=0;
+long entfernung;
+
+
+// ------------------------------------
+
 #if defined(ARDUINO_SAMD_ZERO) && defined(SERIAL_PORT_USBVIRTUAL)
 #define Serial SERIAL_PORT_USBVIRTUAL                               // Required for Serial on Zero based boards
 #endif
@@ -423,6 +437,15 @@ float eInt[3] = {0.0f, 0.0f, 0.0f};                 // vector to hold integral e
 // -----------------
 void setup()
 {
+// Helligekeitssensor  -----------------------------------
+ 
+ pinMode(lightPin, INPUT);
+
+// Ultraschall --------------------
+ pinMode(trigger, OUTPUT);
+ pinMode(echo, INPUT);
+
+// -----------------------------------  
   Wire.begin();
   Wire.setClock(400000);                            // 400 kbit/sec I2C speed
   while (!Serial);                                  // required for Feather M4 Express
@@ -1761,11 +1784,29 @@ void view_heading_SM()
   if (heading < 0) heading += 360.0;                        // Allow for under|overflow
   if (heading >= 360) heading -= 360.0;
 
+// Helligkeitssensor ----------------
+lightWert = analogRead(lightPin);
+
+// Ultraschall
+digitalWrite(trigger, LOW); //Trigger-Signal aus für rauschfreues Signal
+delay(5); //5 Millisekunden
+digitalWrite(trigger, HIGH); // Ultraschall senden
+delay(10); //Schall erklingt für 10 Millisekunden
+digitalWrite(trigger, LOW); //Dann wird der "Ton" abgeschaltet
+
+dauer = pulseIn(echo, HIGH); // Zeit, bis der Schall zurückkehrt
+entfernung = (dauer/2) * 0.03432; // Zeit in entfernung umrechnen
+
+
+//------------
+
   // ----- send the results to the Serial Monitor
   //Serial.print("["); 
   Serial.print((short)pitch); Serial.print(",");
   Serial.print((short)roll);Serial.print(",");
-  Serial.print((short)heading);
+  Serial.print((short)heading);Serial.print(",");
+  Serial.print(lightWert);Serial.print(",");
+  Serial.print(entfernung);
   //Serial.print("]");
   /*
   print_number((short)pitch);

@@ -6,7 +6,7 @@ var newWeight;
 
 var myElement = document.getElementById("centerText");
     myElement.style.color = "hsl(240, 100%,50%)";
-    myElement.style.fontSize = "18";
+    myElement.style.fontSize = "48";
 
 let ws = new WebSocket("ws://localhost:1880/ws/receive");
 
@@ -20,18 +20,19 @@ ws.onmessage = function(event) {
     // console.log(event.data);
 
 //fontWeight   
-newWeight = map(data.pitch, -80,80,100,800); 
+newWeight = map2(data.brightness, 100,500,10,400); 
 myElement.style.fontWeight = newWeight; 
 
-//fontSize
-newSize = map2(data.roll, -60,60,18,48); 
-myElement.style.fontSize = newSize;
+
+// //fontSize
+// newSize = map2(data.distance, 7,200,18,48); 
+// myElement.style.fontSize = newSize;
 
 //letterspacing
-newSpacing= map2(data.heading, 180,360,-10,100); 
+newSpacing= map2(data.roll, -180,180,-10,40); 
 myElement.style.letterSpacing = newSpacing;
 
-console.log(data.heading);
+// console.log(newSize);
 }
 
 
